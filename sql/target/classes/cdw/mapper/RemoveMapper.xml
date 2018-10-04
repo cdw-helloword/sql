@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cdw.mapper.RemoveMapper">
+
+	<!-- 查询原表数据 -->
+	<select id="selectData"  resultType="cdw.pojo.Data">
+		select b.khh dwzh,a.jyrq jzrq,jdbz,fse,jylx,mxbc,a.djhm djhm,a.lsh jzpzh,a.ye ye,a.zwzy zwzy,a.jzgy jzgy,CAST(jyrq AS TIMESTAMP) jzsj
+		from zbmxz a left join zlgjjdw b on a.ZH=b.zh
+		where SUBSTR(a.zh,3,2)='19';
+	</select>
+	
+	<!-- 根据查询条件查询不分页的总商品数 -->
+	<insert id="insertData" parameterType="cdw.pojo.Data">
+		insert into T_COMP_BUSIN_DET(DWZH,JZRQ,FSE,JZPZH,YE,ZWZY,JZGY,JZSJ) 
+		values
+		<foreach collection="list" item="data"  separator=",">
+			(#{data.dwzh},#{data.jzrq},#{data.fse},#{data.jzpzh},#{data.ye},#{data.zwzy},#{data.jzgy},#{data.jzsj})
+		</foreach>
+	</insert>
+	
+	
+</mapper>
